@@ -1,53 +1,33 @@
-// Started with https://docs.flutter.dev/development/ui/widgets-intro
 import 'package:flutter/material.dart';
-import 'package:to_dont_list/objects/item.dart';
-import 'package:to_dont_list/widgets/to_do_items.dart';
+import 'package:to_dont_list/objects/workout.dart';
+import 'package:to_dont_list/widgets/workout_tile.dart';
 import 'package:to_dont_list/widgets/to_do_dialog.dart';
 
-class ToDoList extends StatefulWidget {
-  const ToDoList({super.key});
+class WorkoutList extends StatefulWidget {
+  const WorkoutList({super.key});
 
   @override
-  State createState() => _ToDoListState();
+  State createState() => _WorkoutListState();
 }
 
-class _ToDoListState extends State<ToDoList> {
-  final List<Item> items = [const Item(name: "add more todos")];
-  final _itemSet = <Item>{};
+class _WorkoutListState extends State<WorkoutList> {
+  final List<Workout> workouts = [
+    Workout(
+        type: WorkoutType.run, name: "Morning run", distance: 3, minutes: 30),
+    Workout(type: WorkoutType.lift, name: "Bench press", weight: 135, reps: 5),
+    Workout(type: WorkoutType.practice, name: "Team practice", minutes: 90),
+  ];
 
-  void _handleListChanged(Item item, bool completed) {
+  void _handleDeleteWorkout(Workout workout) {
     setState(() {
-      // When a user changes what's in the list, you need
-      // to change _itemSet inside a setState call to
-      // trigger a rebuild.
-      // The framework then calls build, below,
-      // which updates the visual appearance of the app.
-
-      items.remove(item);
-      if (!completed) {
-        print("Completing");
-        _itemSet.add(item);
-        items.add(item);
-      } else {
-        print("Making Undone");
-        _itemSet.remove(item);
-        items.insert(0, item);
-      }
+      workouts.remove(workout);
     });
   }
 
-  void _handleDeleteItem(Item item) {
+  void _handleNewWorkout(String name, TextEditingController textController) {
     setState(() {
-      print("Deleting item");
-      items.remove(item);
-    });
-  }
-
-  void _handleNewItem(String itemText, TextEditingController textController) {
-    setState(() {
-      print("Adding new item");
-      Item item = Item(name: itemText);
-      items.insert(0, item);
+      Workout workout = Workout(type: WorkoutType.general, name: name);
+      workouts.insert(0, workout);
       textController.clear();
     });
   }
@@ -56,16 +36,14 @@ class _ToDoListState extends State<ToDoList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('To Do List'),
+          title: const Text('Workout Log'),
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
-          children: items.map((item) {
-            return ToDoListItem(
-              item: item,
-              completed: _itemSet.contains(item),
-              onListChanged: _handleListChanged,
-              onDeleteItem: _handleDeleteItem,
+          children: workouts.map((workout) {
+            return WorkoutTile(
+              workout: workout,
+              onDeleteWorkout: _handleDeleteWorkout,
             );
           }).toList(),
         ),
@@ -75,7 +53,7 @@ class _ToDoListState extends State<ToDoList> {
               showDialog(
                   context: context,
                   builder: (_) {
-                    return ToDoDialog(onListAdded: _handleNewItem);
+                    return ToDoDialog(onListAdded: _handleNewWorkout);
                   });
             }));
   }
@@ -83,7 +61,7 @@ class _ToDoListState extends State<ToDoList> {
 
 void main() {
   runApp(const MaterialApp(
-    title: 'To Do List',
-    home: ToDoList(),
+    title: 'Workout Log',
+    home: WorkoutList(),
   ));
 }
