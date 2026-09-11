@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/objects/workout.dart';
 import 'package:to_dont_list/widgets/workout_tile.dart';
-import 'package:to_dont_list/widgets/to_do_dialog.dart';
+import 'package:to_dont_list/widgets/workout_dialog.dart';
 
 class WorkoutList extends StatefulWidget {
   const WorkoutList({super.key});
@@ -24,11 +24,9 @@ class _WorkoutListState extends State<WorkoutList> {
     });
   }
 
-  void _handleNewWorkout(String name, TextEditingController textController) {
+    void _handleNewWorkout(Workout workout) {
     setState(() {
-      Workout workout = Workout(type: WorkoutType.general, name: name);
       workouts.insert(0, workout);
-      textController.clear();
     });
   }
 
@@ -53,7 +51,7 @@ class _WorkoutListState extends State<WorkoutList> {
               showDialog(
                   context: context,
                   builder: (_) {
-                    return ToDoDialog(onListAdded: _handleNewWorkout);
+                      return WorkoutDialog(onWorkoutAdded: _handleNewWorkout);
                   });
             }));
   }
