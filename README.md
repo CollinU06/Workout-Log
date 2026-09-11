@@ -16,4 +16,20 @@ Tap an entry to expand it and see the full breakdown. The add form changes its f
 
 3 miles in 30 minutes is a 10-minute mile. 135 pounds for 5 reps is 675 pounds of volume. Those numbers are more useful than the raw entry, and doing that math yourself after every session gets old.
 
+**Screenshots**
 
+The main list
+
+![Main list of workouts](images/main-list.png)
+
+Picking a workout type
+
+![The type dropdown open](images/dropdown.png)
+
+Adding a run
+
+![The add form with distance and time fields](images/add-run.png)
+
+Adding a lift
+
+![The add form with weight and rep fields](images/add-lift.png)
