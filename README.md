@@ -20,7 +20,7 @@ Tap an entry to expand it and see the full breakdown. The add form changes its f
 
 The main list
 
-![Main list of workouts](images/main-list.png)
+![Main list of workouts](to_dont_list/images/main-list.png)
 
 Picking a workout type
 
