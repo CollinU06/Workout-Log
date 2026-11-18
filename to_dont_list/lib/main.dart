@@ -73,6 +73,8 @@ class _ToDoListState extends State<ToDoList> {
               _handleListChanged(item, false);
             }
           }
+          // Sort timers so the one with the least time left is on top (issue #1)
+          items.sort((a, b) => a.timeRemaining.compareTo(b.timeRemaining));
         });
       });
     }
